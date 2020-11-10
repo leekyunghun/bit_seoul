@@ -1,12 +1,11 @@
 #1. 데이터
 import numpy as np
 
-x = np.array([range(1, 101), range(711,811), range(100)])
+x = np.array(range(1, 101))
 y = np.array([range(101, 201), range(311,411), range(100)])
 
 # x와 y의 열값이 3개이므로 x1, x2, x3 & y1, y2, y3
 
-x = x.T
 y = y.T
 
 from sklearn.model_selection import train_test_split
@@ -17,13 +16,13 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(16, activation = 'relu', input_dim = 3))         # input_dim 값은 열의 갯수
-model.add(Dense(8, activation = 'relu'))
+model.add(Dense(10, input_dim = 1))         # input_dim 값은 열의 갯수
+model.add(Dense(5))
 model.add(Dense(3))
 
 #3.컴파일, 훈련
 model.compile(loss = 'mse', optimizer='adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=100, batch_size=1, validation_split=0.2)
+model.fit(x_train, y_train, epochs=200, batch_size=1, validation_split=0.2)
 
 #4.평가, 예측
 loss = model.evaluate(x_test, y_test, batch_size = 1)
@@ -31,7 +30,7 @@ print("loss : ", loss)
 
 y_pred = model.predict(x_test)
 print(y_pred)
-
+print(y_test)
 from sklearn.metrics import mean_squared_error
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))

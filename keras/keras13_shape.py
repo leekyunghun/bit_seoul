@@ -17,8 +17,9 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(16, activation = 'relu', input_dim = 3))         # input_dim 값은 열의 갯수
-model.add(Dense(8, activation = 'relu'))
+model.add(Dense(10, input_shape = (3, )))         # input_dim 값은 열의 갯수
+# (100,10,3) => input_shape = (10,3)
+model.add(Dense(5))
 model.add(Dense(3))
 
 #3.컴파일, 훈련

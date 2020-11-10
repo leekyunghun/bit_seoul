@@ -17,13 +17,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(16, activation = 'relu', input_dim = 3))         # input_dim 값은 열의 갯수
-model.add(Dense(8, activation = 'relu'))
+model.add(Dense(10, input_shape = (3, )))         # input_dim 값은 열의 갯수
+# (100,10,3) => input_shape = (10,3)
+model.add(Dense(5))
 model.add(Dense(3))
 
 #3.컴파일, 훈련
 model.compile(loss = 'mse', optimizer='adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=100, batch_size=1, validation_split=0.2)
+model.fit(x_train, y_train, epochs=100, batch_size=1, validation_split = 0.2, verbose = 3)
 
 #4.평가, 예측
 loss = model.evaluate(x_test, y_test, batch_size = 1)

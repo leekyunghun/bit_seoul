@@ -21,4 +21,3 @@ model.fit(x, y, epochs = 100, batch_size = 1)   # model.fit => 모델을 훈련�
 loss, acc = model.evaluate(x, y, batch_size = 1)
 print("loss : ", loss)
 print("acc : ", acc)
-
