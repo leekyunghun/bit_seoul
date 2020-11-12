@@ -31,6 +31,7 @@ print("loss : ", loss)
 y_pred = model.predict(x_test)
 print(y_pred)
 print(y_test)
+
 from sklearn.metrics import mean_squared_error
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))

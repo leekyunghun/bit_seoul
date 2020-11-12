@@ -68,7 +68,7 @@ result = model.evaluate([x1_test, x2_test], [y1_test, y2_test], batch_size = 8)
 print("result : ", result)
 
 y1_pred, y2_pred = model.predict([x1_test, x2_test])
-
+print(y1_pred, y2_pred)
 from sklearn.metrics import mean_squared_error
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))

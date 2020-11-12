@@ -13,6 +13,8 @@ y1 = y1.T
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, x2_train, x2_test, y1_train, y1_test= train_test_split(x1, x2, y1, train_size = 0.7)
 
+print([x1_test, x2_test])
+
 #2 모델 구성
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
@@ -53,14 +55,15 @@ model = Model(inputs = [input1, input2], outputs = output1)
 
 #3 컴파일, 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit([x1_train, x2_train], y1_train, epochs = 100, batch_size = 1, validation_split = 0.2, verbose = 1)
+model.fit([x1_train, x2_train], y1_train, epochs = 300, batch_size = 1, validation_split = 0.2, verbose = 1)
 
 #4. 예측, 평가
 result = model.evaluate([x1_test, x2_test], y1_test, batch_size = 1)
 print("result : ", result)
 
 y_pred = model.predict([x1_test, x2_test])
-
+print(y_pred)
+print(y_pred.shape)
 from sklearn.metrics import mean_squared_error
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))
