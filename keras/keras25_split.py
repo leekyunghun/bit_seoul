@@ -5,10 +5,8 @@ size = 5
 def split_x(seq, size):
     aaa = []
     for i in range(len(seq) - size + 1):
-        aaa.append([item for item in seq[i : (i+size)]])
-        
-        # subset = seq[i : (i+size)]
-        # aaa.append([item for item in subset])
+        subset = seq[i : (i+size)]
+        aaa.append(subset)
 
     print(type(aaa))
     return np.array(aaa)
