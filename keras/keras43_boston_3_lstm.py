@@ -46,28 +46,10 @@ model.summary()
 from tensorflow.keras.callbacks import EarlyStopping  
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 50, mode = 'min') 
 
-model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mae'])
+model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
 model.fit(x_train, y_train, epochs = 500, batch_size = 32, verbose = 1, validation_split = 0.25, callbacks = [early_stopping])
 
 # 4. 평가, 예측
 loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
 print("loss : ", loss)
 print("mse: ", mse)
-
-y_pred = model.predict(x_test)
-
-from sklearn.metrics import mean_squared_error
-def RMSE(y_test, y_pred):
-    return np.sqrt(mean_squared_error(y_test, y_pred))
-print("RMSE : ", RMSE(y_test, y_pred))
-
-from sklearn.metrics import r2_score
-r2 = r2_score(y_test, y_pred)
-print("R2 : ", r2) 
-
-# 9/9 [==============================] - 0s 17ms/step - loss: 46.9491 - mae: 5.0011 - val_loss: 40.3292 - val_mae: 4.6551
-# 152/152 [==============================] - 0s 2ms/step - loss: 68.8653 - mae: 5.8628
-# loss :  68.86528778076172
-# mse:  5.862788677215576
-# RMSE :  8.298510364499567
-# R2 :  0.2669746239487293

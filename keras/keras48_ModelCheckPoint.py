@@ -43,17 +43,49 @@ model.add(Dense(10, activation = 'softmax'))                                    
 model.summary()
 
 # 3.컴파일, 훈련
-from tensorflow.keras.callbacks import EarlyStopping, TensorBoard         # 조기종료 기능
-early_stopping = EarlyStopping(monitor = 'loss', patience = 5, mode = 'min')
-to_list = TensorBoard(log_dir = 'graph', histogram_freq = 0, write_graph = True, write_images = True)
+modelpath = "./model/mnist/mnist-{epoch:02d}-{val_loss: 4f}.hdf5"                               # Checkpoint가 저장될 경로 설정
+
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint               # 조기종료 기능
+early_stopping = EarlyStopping(monitor = 'val_loss', patience = 30)
+cp = ModelCheckpoint(filepath = modelpath, monitor = 'val_loss', save_best_only = True, mode = 'auto')      # Model Checkpoint monitor로 지정한 값이 좋을때마다 저장 
 
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])    # 분류모델에서의 loss는 categorical_crossentropy를 해준다.
-model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.2, verbose = 1, callbacks = [early_stopping])
+hist = model.fit(x_train, y_train, epochs = 30, batch_size = 32, validation_split = 0.2, verbose = 1, callbacks = [early_stopping, cp])
+
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+acc = hist.history['accuracy']
+val_acc = hist.history['val_accuracy']
+
+model.save("./save/mnist/mnist_model_2.h5")
+model.save_weights("./save/mnist/mnist_weights.h5")
 
 # 4.평가, 예측
-loss, accuracy = model.evaluate(x_test, y_test, batch_size = 100)
-print("loss : ", loss)
-print("accuracy : ", accuracy)
+result = model.evaluate(x_test, y_test, batch_size = 32)
+print("loss : ", result[0])
+print("accuracy : ", result[1])
 
+# 시각화
+import matplotlib.pyplot as plt
+plt.figure(figsize = (10, 6))       # 단위가 무엇인지 찾아보기
+plt.subplot(2, 1, 1)                # 2행 1열 중 첫번째
+plt.plot(hist.history['loss'], marker = '.', c = 'red', label = 'loss')
+plt.plot(hist.history['val_loss'], marker = '.', c = 'blue', label = 'val_loss')
+plt.grid()
 
+plt.title('loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(loc = 'upper right')
 
+plt.subplot(2, 1, 2)                # 2행 1열 중 첫번째
+plt.plot(hist.history['accuracy'], marker = '.', c = 'red')
+plt.plot(hist.history['val_accuracy'], marker = '.', c = 'blue')
+plt.grid()
+
+plt.title('accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['accuracy', 'val_accuracy'])
+
+plt.show()

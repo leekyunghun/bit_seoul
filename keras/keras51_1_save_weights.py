@@ -42,18 +42,31 @@ model.add(Dense(10, activation = 'softmax'))                                    
 
 model.summary()
 
+# model.save("./save/model_test01_1.h5")
+
 # 3.컴파일, 훈련
-from tensorflow.keras.callbacks import EarlyStopping, TensorBoard         # 조기종료 기능
-early_stopping = EarlyStopping(monitor = 'loss', patience = 5, mode = 'min')
-to_list = TensorBoard(log_dir = 'graph', histogram_freq = 0, write_graph = True, write_images = True)
+modelpath = "./model/{epoch:02d}-{val_loss: 4f}.hdf5"                               # Checkpoint가 저장될 경로 설정
+
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint               # 조기종료 기능
+early_stopping = EarlyStopping(monitor = 'val_loss', patience = 30)
+cp = ModelCheckpoint(filepath = modelpath, monitor = 'val_loss', save_best_only = True, mode = 'auto')      # Model Checkpoint monitor로 지정한 값이 좋을때마다 저장 
 
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])    # 분류모델에서의 loss는 categorical_crossentropy를 해준다.
-model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.2, verbose = 1, callbacks = [early_stopping])
+hist = model.fit(x_train, y_train, epochs = 10, batch_size = 32, validation_split = 0.2, verbose = 1, callbacks = [early_stopping, cp])
+
+# 모델 + 가중치 저장
+model.save("./save/model_test02_2.h5")
+
+# 가중치 저장
+model.save_weights("./save/weight_test02.h5")
 
 # 4.평가, 예측
-loss, accuracy = model.evaluate(x_test, y_test, batch_size = 100)
-print("loss : ", loss)
-print("accuracy : ", accuracy)
+result = model.evaluate(x_test, y_test, batch_size = 32)
+print("loss : ", result[0])
+print("accuracy : ", result[1])
 
-
-
+# Epoch 10/10
+# 1500/1500 [==============================] - 4s 2ms/step - loss: 0.0095 - accuracy: 0.9970 - val_loss: 0.0882 - val_accuracy: 0.9832
+# 313/313 [==============================] - 1s 2ms/step - loss: 0.0873 - accuracy: 0.9837
+# loss :  0.08729441463947296
+# accuracy :  0.9836999773979187

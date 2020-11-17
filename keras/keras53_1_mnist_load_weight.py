@@ -1,11 +1,3 @@
-# Onehotencoding
-
-# 1.keras
-# to_categorical() 사용
-
-# 2.sklearn
-# OneHotEncoder() 사용
-
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.datasets import mnist
@@ -38,22 +30,41 @@ model.add(Conv2D(20, (2,2), strides = 1))                                       
 model.add(MaxPooling2D(pool_size = 2))                                              # (6, 6, 40)
 model.add(Flatten())                                                                # (1440, )
 model.add(Dense(100, activation = 'relu'))                                          
-model.add(Dense(10, activation = 'softmax'))                                        # 분류 모델은 항상 아웃풋 activation을 softmax해야함
-
-model.summary()
+model.add(Dense(10, activation = 'softmax'))    
 
 # 3.컴파일, 훈련
-from tensorflow.keras.callbacks import EarlyStopping, TensorBoard         # 조기종료 기능
-early_stopping = EarlyStopping(monitor = 'loss', patience = 5, mode = 'min')
-to_list = TensorBoard(log_dir = 'graph', histogram_freq = 0, write_graph = True, write_images = True)
-
+from tensorflow.keras.models import load_model
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])    # 분류모델에서의 loss는 categorical_crossentropy를 해준다.
-model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.2, verbose = 1, callbacks = [early_stopping])
+
+model1 = load_model('./model/mnist/03- 0.060129.hdf5')
+model2 = load_model('./save/mnist/mnist1_model_2.h5')
+model.load_weights('./save/mnist/mnist1_weights.h5')
 
 # 4.평가, 예측
-loss, accuracy = model.evaluate(x_test, y_test, batch_size = 100)
-print("loss : ", loss)
-print("accuracy : ", accuracy)
+result1 = model1.evaluate(x_test, y_test, batch_size = 1)
+result2 = model2.evaluate(x_test, y_test, batch_size = 1)
+result3 = model.evaluate(x_test, y_test, batch_size = 1)
 
+print("CheckPoint")
+print("loss : ", result1[0])
+print("accuracy : ", result1[1])
 
+print("\nLoad_model")
+print("loss : ", result2[0])
+print("accuracy : ", result2[1])
 
+print("\nLoad_weight")
+print("loss : ", result2[0])
+print("accuracy : ", result2[1])
+
+# CheckPoint
+# loss :  0.05871579051017761
+# accuracy :  0.9825999736785889
+
+# Load_model
+# loss :  0.05871579051017761
+# accuracy :  0.9825999736785889
+
+# Load_weight
+# loss :  0.05871579051017761
+# accuracy :  0.9825999736785889

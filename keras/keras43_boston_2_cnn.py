@@ -54,21 +54,3 @@ model.fit(x_train, y_train, epochs = 200, batch_size = 10, verbose = 1, validati
 loss, mse = model.evaluate(x_test, y_test, batch_size = 1)
 print("loss : ", loss)
 print("mse: ", mse)
-
-y_pred = model.predict(x_test)
-
-from sklearn.metrics import mean_squared_error
-def RMSE(y_test, y_pred):
-    return np.sqrt(mean_squared_error(y_test, y_pred))
-print("RMSE : ", RMSE(y_test, y_pred))
-
-from sklearn.metrics import r2_score
-r2 = r2_score(y_test, y_pred)
-print("R2 : ", r2) 
-
-# 27/27 [==============================] - 0s 2ms/step - loss: 19.3056 - mae: 2.9481 - val_loss: 15.6649 - val_mae: 2.2747
-# 152/152 [==============================] - 0s 2ms/step - loss: 19.5484 - mae: 2.8303
-# loss :  19.548437118530273
-# mse:  2.8302736282348633
-# RMSE :  4.421361360518395
-# R2 :  0.7756312608978917
