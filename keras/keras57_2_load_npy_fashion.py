@@ -7,7 +7,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 1.데이터
-(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()        # (28, 28, 1)
+x_train = np.load('./data/fashion_x_train.npy')
+y_train = np.load('./data/fashion_y_train.npy')
+x_test = np.load('./data/fashion_x_test.npy')
+y_test = np.load('./data/fashion_y_test.npy')
 
 # 데이터 전처리
 x_train = x_train.reshape(x_train.shape[0], x_train.shape[1] , x_train.shape[2], 1) / 255.0

@@ -6,9 +6,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
 # 1.데이터
-dataset = load_breast_cancer()
-x = dataset.data                # (569, 30)
-y = dataset.target              # (569, )
+x = np.load('./data/cancer_x.npy')
+y = np.load('./data/cancer_y.npy')
 
 # 데이터 전처리
 from sklearn.preprocessing import MinMaxScaler, MaxAbsScaler, StandardScaler, RobustScaler  # 데이터 전처리 기능 (최대값, 최소값 이용), 총 4가지
@@ -17,7 +16,7 @@ scaler = MinMaxScaler()
 # scaler = RobustScaler()
 # scaler = StandardScaler()
 
-scaler.fit(x)                                                   
+scaler.fit(x)
 x = scaler.transform(x)
 
 from sklearn.model_selection import train_test_split
@@ -36,7 +35,7 @@ model.add(Dense(1, activation = 'sigmoid'))
 from tensorflow.keras.models import load_model
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy']) 
 
-model1 = load_model("./model/cancer/47- 0.047189-second.hdf5")
+model1 = load_model("./model/cancer/74- 0.008421.hdf5")
 model2 = load_model("./save/cancer/cancer_model_2.h5")
 model.load_weights("./save/cancer/cancer_weights.h5")
 

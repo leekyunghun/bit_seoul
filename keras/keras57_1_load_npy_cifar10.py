@@ -6,7 +6,10 @@ from tensorflow.keras.layers import Flatten, MaxPooling2D
 import matplotlib.pyplot as plt
 import numpy as np
 
-(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+x_train = np.load('./data/cifar10_x_train.npy')
+y_train = np.load('./data/cifar10_y_train.npy')
+x_test = np.load('./data/cifar10_x_test.npy')
+y_test = np.load('./data/cifar10_y_test.npy')
 
 # 데이터 전처리 1.OneHotEncoding
 from tensorflow.keras.utils import to_categorical               # 분류모델에서는 onehotencoding 필수

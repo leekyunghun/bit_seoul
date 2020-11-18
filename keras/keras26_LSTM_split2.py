@@ -16,10 +16,12 @@ def split_x(seq, size):
     return np.array(aaa)
 
 datasets = split_x(dataset, size)
+print(dataset.shape)
 
 # 1.데이터
 x = datasets[: , 0:4]                   # input 슬라이싱        datasets의 1 ~ 4열에 해당하는 값들을 저장
 y = datasets[: , 4]                     # output 슬라이싱       datasets의 5열에 해당하는 값들을 저장
+
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size = 0.8, shuffle=True)      # 주어진 데이터전체에서 train, test set을 자동으로 만들어줌
