@@ -15,7 +15,7 @@ model.add(Dense(1))
 
 #3.컴파일, 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])  # metrics = 평가방식
-model.fit(x, y, epochs = 100, batch_size = 1)   # model.fit => 모델을 훈련시킴
+model.fit(x, y, epochs = 50, batch_size = 1)   # model.fit => 모델을 훈련시킴
 
 #4.평가, 예측
 loss, acc = model.evaluate(x, y, batch_size = 1)
