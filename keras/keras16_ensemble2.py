@@ -66,10 +66,10 @@ model = Model(inputs = [input1, input2], outputs = [output1, output2_3, output3]
 
 #3 컴파일, 훈련
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-model.fit([x1_train, x2_train], [y1_train, y2_train, y3_train], epochs = 100, batch_size = 8, validation_split = 0.25, verbose = 1)
+model.fit([x1_train, x2_train], [y1_train, y2_train, y3_train], epochs = 150, batch_size = 10, validation_split = 0.25, verbose = 1)
 
 #4. 예측, 평가
-result = model.evaluate([x1_test, x2_test], [y1_test, y2_test, y3_test], batch_size = 8)
+result = model.evaluate([x1_test, x2_test], [y1_test, y2_test, y3_test], batch_size = 1)
 print("result : ", result)
 
 y1_pred, y2_pred, y3_pred = model.predict([x1_test, x2_test])
