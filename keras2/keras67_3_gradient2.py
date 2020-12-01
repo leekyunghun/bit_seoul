@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+f = lambda x: x**2 -4*x + 6         # lambda 함수 사용하는 방법
+
+gradient = lambda x: 2*x - 4
+
+x0 = 0.0
+MaxIter = 30
+learning_rate = 0.15
+
+print("step\tx\tf(x)")
+print("{:02d}\t{:6.5f}\t{:6.5f}".format(0, x0, f(x0)))
+
+for i in range(MaxIter):
+    x1 = x0 - learning_rate * gradient(x0)          # learning_rate를 이용하여 최솟값인 loss찾는 공식
+    x0 = x1
+    print("{:02d}\t{:6.5f}\t{:6.5f}".format(i+1, x0, f(x0)))
