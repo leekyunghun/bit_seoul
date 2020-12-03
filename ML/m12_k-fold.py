@@ -19,18 +19,18 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size = 0.8, shuf
 # 2.모델
 kfold = KFold(n_splits = 5, shuffle=True)         # n_splits = validation을 몇개로 나눠서 할지
 
-model = SVC()
+model = SVC(verbose=1)
 
 scores = cross_val_score(model, x_train, y_train, cv = kfold)       # cross_validation에서 단계마다 나오는 scroe
 
 print('scores : ', scores)
 
-# # 3.컴파일, 훈련
-# model.fit(x_train, y_train)
+# 3.컴파일, 훈련
+model.fit(x_train, y_train)
 
-# # 4 평가, 예측
-# score = model.score(x_test, y_test)     # model.evaluate 와 같은 기능
-# print("model.score : ", score)
+# 4 평가, 예측
+score = model.score(x_test, y_test)     # model.evaluate 와 같은 기능
+print("model.score : ", score)
 
 # # accuracy_score와 비교할것 -> 분류모델
 # # r2_score와 비교할것 -> 회귀모델

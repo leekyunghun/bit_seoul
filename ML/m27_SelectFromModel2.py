@@ -52,7 +52,7 @@ for thresh in thresholds:
 
     select_x_train = selection.transform(x_train)
     
-    selection_model = RandomizedSearchCV(XGBRegressor(), parameters, cv = 5)
+    selection_model = RandomizedSearchCV(XGBRegressor(), parameter, cv = 5)
     selection_model.fit(select_x_train, y_train)
 
     select_x_test = selection.transform(x_test)
